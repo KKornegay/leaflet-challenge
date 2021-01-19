@@ -72,7 +72,7 @@
       "Light Map": lightmap
     };
   
-    // Create an overlayMaps object to hold the bikeStations layer
+    // Create an overlayMaps object to hold the earthQuakes layer
     var overlayMaps = {
       "Earthsquakes": earthQuakes
     };
@@ -92,28 +92,28 @@
   
   function createMarkers(response) {
   
-    // Pull the "stations" property off of response.data
+    // Pull the "earthquakes" property off of response.features
     var quakes = response.features;
   
-    // Initialize an array to hold bike markers
+    // Initialize an array to hold earthquake markers
     var quakeMarkers = [];
   
-    // Loop through the stations array
+    // Loop through the quakes array
     for (var index = 0; index < quakes.length; index++) {
       var quake = quakes[index];
   
-      // For each station, create a marker and bind a popup with the station's name
+      // For each quake, create a marker and bind a popup with the earthquake's location
       var quakeMarker = L.marker([quake.geometry.coordinates[1], quake.geometry.coordinates[0]])
         .bindPopup("<h3>" + quake.properties.place + "</h3>");
   
-      // Add the marker to the bikeMarkers array
+      // Add the marker to the quakeMarkers array
       quakeMarkers.push(quakeMarker);
     }
   
-    // Create a layer group made from the bike markers array, pass it into the createMap function
+    // Create a layer group made from the quake markers array, pass it into the createMap function
     createMap(L.layerGroup(quakeMarkers));
   }
   
   
-  // Perform an API call to the Citi Bike API to get station information. Call createMarkers when complete
+  // Perform an API call to the USGS earthquake information. Call createMarkers when complete
   d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson", createMarkers);
