@@ -78,10 +78,10 @@
     };
   
     // Create the map object with options
-    var map = L.map("map-id", {
+    var map = L.map("mapid", {
       center: [15.5994, -28.6731],
       zoom: 3,
-      layers: [lightmap, bikeStations]
+      layers: [lightmap, earthQuakes]
     });
   
     // Create a layer control, pass in the baseMaps and overlayMaps. Add the layer control to the map
@@ -103,8 +103,8 @@
       var quake = quakes[index];
   
       // For each station, create a marker and bind a popup with the station's name
-      var quakeMarker = L.marker([quake.lat, quake.lon])
-        .bindPopup("<h3>" + feature.properties.title + "</h3>");
+      var quakeMarker = L.marker([quake.geometry.coordinates[1], quake.geometry.coordinates[0]])
+        .bindPopup("<h3>" + quake.properties.place + "</h3>");
   
       // Add the marker to the bikeMarkers array
       quakeMarkers.push(quakeMarker);
