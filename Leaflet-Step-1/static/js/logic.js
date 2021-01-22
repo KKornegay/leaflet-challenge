@@ -128,24 +128,22 @@ d3.json(url, function(response) {
     //Define and Create features, from website
 function createFeatures(earthquakedata){
     // Function that will determine the color of mag
-function chooseColor(mag) {
+function chooseColor(depth) {
     switch (true) {
-    case mag > 3.5:
-      return "yellow";
-    case mag > 3.0:
+    case depth > 90:
       return "red";
-    case mag > 2.5:
+    case depth > 70:
+      return "orangered";
+    case depth > 50:
+      return "darkorange";
+    case depth > 30:
       return "orange";
-    case mag > 2.0:
-      return "green";
-    case mag >1.5:
-      return "purple";
-    case mag >1.0:
-      return "blue";
-    case mag >.5:
-        return "white";
+    case depth > 10:
+      return "yellow";
+    case depth > -10:
+        return "greenyellow";
     default:
-      return "black";
+      return "green";
     }
 }
     var earthQuakes = L.geoJSON(earthquakedata, {
@@ -156,7 +154,7 @@ function chooseColor(mag) {
         pointToLayer: function(feature, latlng) {
             return new L.circleMarker(latlng,
                 {radius: feature.properties.mag * 6,
-                fillColor: chooseColor(feature.properties.mag),
+                fillColor: chooseColor(feature.geometry.coordinates[2]),
                 fillOpacity: .8,
                 color: "navy",
                 weight: 1
@@ -217,14 +215,14 @@ function createMap (earthquakes){
   var legend = L.control({ position: "bottomright" });
   legend.onAdd = function() {
     var div = L.DomUtil.create("div", "info legend");
-    var colors = ["yellow", "red", "orange", "green", "purple", "blue", "white", "black"].reverse();
+    var colors = ["red", "orangered", "darkorange", "orange", "yellow", "greenyellow", "green"].reverse();
     var labels = [];
 
     // Add min & max
-    var legendInfo = "<h1>Magnitude</h1>" +
+    var legendInfo = "<h1>Depth</h1>" +
       "<div class=\"labels\">" +
-        "<div class=\"min\">" + "0" + "</div>" +
-        "<div class=\"max\">" + "3.5" + "</div>" +
+        "<div class=\"min\">" + "-10" + "</div>" +
+        "<div class=\"max\">" + "90+" + "</div>" +
       "</div>";
 
     div.innerHTML = legendInfo;
