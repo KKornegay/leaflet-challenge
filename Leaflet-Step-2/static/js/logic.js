@@ -167,7 +167,7 @@ function chooseColor(depth) {
 
 function createMap (earthquakes){
     console.log(earthquakes)
-   // Define streetmap and darkmap layers
+   // Define streetmap, darkmap, satellite layers
   var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     tileSize: 512,
@@ -184,10 +184,18 @@ function createMap (earthquakes){
     accessToken: API_KEY
   });
 
+  var satelliteMap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/256/{z}/{x}/{y}?" +
+  "access_token={accessToken}",{
+    attribution: "Map data &copy; <a href=\"http://openstreetmap.org\">OpenStreetMap</a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"http://mapbox.com\">Mapbox</a>",
+    maxZoom: 18,
+    accessToken: API_KEY
+  });
+
   // Define a baseMaps object to hold our base layers
   var baseMaps = {
     "Street Map": streetmap,
-    "Dark Map": darkmap
+    "Dark Map": darkmap,
+    "Satellite Map": satelliteMap
   };
 
   // Create overlay object to hold our overlay layer
