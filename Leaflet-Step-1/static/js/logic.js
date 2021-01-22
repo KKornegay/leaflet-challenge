@@ -141,7 +141,7 @@ function chooseColor(depth) {
     case depth > 10:
       return "yellow";
     case depth > -10:
-        return "greenyellow";
+      return "greenyellow";
     default:
       return "green";
     }
